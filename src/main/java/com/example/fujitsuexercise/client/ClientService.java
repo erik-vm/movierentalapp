@@ -1,10 +1,13 @@
 package com.example.fujitsuexercise.client;
 
 import com.example.fujitsuexercise.invoice.Invoice;
+import com.example.fujitsuexercise.invoice.InvoiceRepository;
 import com.example.fujitsuexercise.invoice.InvoiceService;
 import com.example.fujitsuexercise.movie.Movie;
 import com.example.fujitsuexercise.movie.MovieRepository;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -14,11 +17,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ClientService {
     private final ClientRepository clientRepository;
     private final MovieRepository movieRepository;
-    private final InvoiceService invoiceService;
+    private final InvoiceRepository invoiceRepository;
+    @Autowired
+    private  InvoiceService invoiceService;
 
 
     List<Client> showAllClients() {
@@ -97,7 +102,7 @@ public class ClientService {
     List<Invoice> showClientInvoicesByClientId(Long id) {
         Client client = getClientById(id);
         List<Invoice> clientInvoices = new ArrayList<>();
-        for (Invoice invoice : invoiceService.invoiceList()) {
+        for (Invoice invoice : invoiceRepository.findAll()) {
             if (invoice.getClient() == client) {
                 clientInvoices.add(invoice);
             }
@@ -134,6 +139,10 @@ public class ClientService {
         clientRepository.save(client);
         movieRepository.save(movie);
 
+    }
+    boolean doesClientExist(Long clientId){
+        Optional<Client> optionalClient = clientRepository.findById(clientId);
+        return optionalClient.isPresent();
     }
 
 }

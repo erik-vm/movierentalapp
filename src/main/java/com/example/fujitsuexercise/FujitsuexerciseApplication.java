@@ -6,15 +6,18 @@ import com.example.fujitsuexercise.invoice.InvoiceRepository;
 import com.example.fujitsuexercise.movie.Movie;
 import com.example.fujitsuexercise.movie.MovieGenre;
 import com.example.fujitsuexercise.movie.MovieRepository;
+import com.example.fujitsuexercise.omdbapi.OMDbAPIPlaceHolder;
 import com.github.javafaker.Faker;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 
 import java.time.LocalDate;
 
 @SpringBootApplication
+@EnableFeignClients
 public class FujitsuexerciseApplication {
 
     public static void main(String[] args) {
@@ -26,6 +29,7 @@ public class FujitsuexerciseApplication {
     CommandLineRunner commandLineRunner(ClientRepository clientRepository, MovieRepository movieRepository) {
         return args -> {
 
+            //To populate database with clients and movies, remove comments below
             // generateClients(clientRepository);
             // generateMovies(movieRepository);
 

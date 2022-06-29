@@ -150,29 +150,4 @@ class MovieServiceTest {
         //then
         assertTrue(searchSuccessful);
     }
-
-    @Test
-    void sortByTimesRentedDesc() {
-        //given
-        Movie movie1 = new Movie("Title", "Director", "Actors", "Lorem Ipsum",
-                LocalDate.now().minusDays(14), MovieGenre.COMEDY, 7);
-
-        Movie movie2 = new Movie("Title", "Director", "Actors", "Lorem Ipsum",
-                LocalDate.now().minusDays(14), MovieGenre.COMEDY, 3);
-
-        Movie movie3 = new Movie("Title", "Director", "Actors", "Lorem Ipsum",
-                LocalDate.now().minusDays(14), MovieGenre.COMEDY, 5);
-        movieRepository.saveAll(Arrays.asList(movie1, movie2, movie3));
-
-        //when
-        List<Movie> movieList = underTest.sortByTimesRentedDesc();
-        boolean searchSuccessful = false;
-        if (movieList.get(0).equals(movie1)  && movieList.get(1).equals(movie3) && movieList.get(2).equals(movie2) ){
-            searchSuccessful = true;
-        }
-
-        //then
-        assertTrue(searchSuccessful);
-    }
-
 }
